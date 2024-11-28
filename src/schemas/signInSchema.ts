@@ -2,5 +2,5 @@ import {z} from 'zod'
 
 export const signInSchema = z.object({
     identifier: z.string(), // identifier is of any thing such as username, email...
-    passwod: z.string()
+    password: z.string()
 })
