@@ -24,7 +24,6 @@ import { Button } from "./ui/button"
 import { X } from "lucide-react"
 import { Message } from "@/model/user"
 import { useToast } from "@/hooks/use-toast"
-import { title } from "process"
 import axios from "axios"
 import { ApiResponse } from "@/type/ApiResponse"
 
@@ -38,9 +37,9 @@ const page = ({ message, onMessageDelete }: MessageCardProps) => {
     const { toast } = useToast()
 
     const handleDeleteConfirm = async () => {
-        const response = axios.delete<ApiResponse>(`/api/delete-message/${message._id}`)
+        const response = await axios.delete<ApiResponse>(`/api/delete-message/${message._id}`)
         toast({
-            title: (await response).data.message    //here the response.data.message creates the error and it fixes it automatically
+            title: response.data.message
         })
     
     return (
