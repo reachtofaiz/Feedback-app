@@ -1,12 +1,17 @@
 'use client'
 
+import MessageCard from "@/components/MessageCard"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { Switch } from "@/components/ui/switch"
 import { useToast } from "@/hooks/use-toast"
 import { Message } from "@/model/user"
 import { acceptMessageSchema } from "@/schemas/acceptMessageSchema"
 import { ApiResponse } from "@/type/ApiResponse"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios, { AxiosError } from "axios"
-import { Session } from "next-auth"
+import { Loader2, RefreshCcw } from "lucide-react"
+import { Session, User } from "next-auth"
 import { useSession } from "next-auth/react"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -24,7 +29,7 @@ const page = () => {
         setMessages(messages.filter((message) => message._id !== messageId))
     }
 
-    const { data: Session } = useSession()
+    const { data: session } = useSession()
 
     const form = useForm({
         resolver: zodResolver(acceptMessageSchema)
@@ -77,10 +82,10 @@ const page = () => {
     }, [setIsLoading, setMessages])
 
     useEffect(() => {
-        if (!Session || !Session.user) return
+        if (!session || !session.user) return
         fetchMessages()
         fetchAcceptMessage()
-    }, [Session, setValue, fetchAcceptMessage, fetchMessages])
+    }, [session, setValue, fetchAcceptMessage, fetchMessages])
 
     //handle switch change 
 
@@ -104,13 +109,80 @@ const page = () => {
         }
     }
 
-    if(!Session || !Session.user){
+    const { username } = session?.user as User
+
+    const baseUrl = `${window.location.protocol}//${window.location.host}`
+    const profileUrl = `${baseUrl}/u/${username}`
+
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(profileUrl)
+        toast({
+            title: "URl copied",
+            description: "Profile URL is been copied to clipboard"
+        })
+    }
+
+    if (!session || !session.user) {
         return <div>Please Login</div>
     }
 
-
     return (
-        <div>Dashboard</div>
+        <div>
+            <h1>User Dashboard</h1>
+            <div>
+                <h2>Copy your unique link</h2>{``}
+                <div>
+                    <input
+                        type="text"
+                        value={profileUrl}
+                        disabled
+                    />
+                    <Button onClick={copyToClipboard}>Copy</Button>
+                </div>
+            </div>
+
+            <div>
+                <Switch
+                    {...register('acceptMessage')}
+                    onCheckedChange={handleSwitchChange}
+                    disabled={isSwitchLoading}
+                />
+                <span>
+                    Accept message: {acceptMessages ? 'On' : 'Of'}
+                </span>
+            </div>
+            <Separator />
+
+            <Button
+                className=""
+                variant="outline"
+                onClick={(e) => {
+                    e.preventDefault();
+                    fetchMessages(true);
+                }}
+            >
+                {isLoading ? (
+                    <Loader2 />
+                ) : (
+                    <RefreshCcw />
+                )}
+            </Button>
+            <div>
+                {messages.length > 0 ? (
+                    messages.map((message, index) => (
+                        <MessageCard
+                        key = {message._id}
+                        message = {message}
+                        onMessageDelete = {handleDeleteMessage}
+                        />
+                    ))
+                ) : (
+                    <p>No message to display</p>
+                )}
+            </div>
+
+
+        </div>
     )
 }
 
