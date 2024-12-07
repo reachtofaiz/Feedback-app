@@ -13,8 +13,10 @@ import axios, { AxiosError } from "axios"
 import { Loader2, RefreshCcw } from "lucide-react"
 import { Session, User } from "next-auth"
 import { useSession } from "next-auth/react"
+import { redirect, useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+
 
 
 const page = () => {
@@ -22,14 +24,28 @@ const page = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [isSwitchLoading, setIsSwitchLoading] = useState(false)
     const { toast } = useToast()
+    const router = useRouter()
 
     //optimistic UI --> gather information about this
 
+    const { data: session , status } = useSession()
+    
+
+
+    if(status == "unauthenticated"){
+        // router.replace('/sign-in')
+        redirect('/sign-in')
+    }
+
+    console.log(session);
+    
+    const { username } = session?.user as User
+
+    
     const handleDeleteMessage = (messageId: string) => {
         setMessages(messages.filter((message) => message._id !== messageId))
     }
 
-    const { data: session } = useSession()
 
     const form = useForm({
         resolver: zodResolver(acceptMessageSchema)
@@ -109,10 +125,12 @@ const page = () => {
         }
     }
 
-    const { username } = session?.user as User
+    
 
     const baseUrl = `${window.location.protocol}//${window.location.host}`
     const profileUrl = `${baseUrl}/u/${username}`
+
+    
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(profileUrl)

@@ -3,7 +3,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs"
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/user";
-import { error } from "console";
 
 
 export const authOption: NextAuthOptions = {
@@ -18,20 +17,24 @@ export const authOption: NextAuthOptions = {
             async authorize(credentials: any): Promise<any> {
                 await dbConnect()
                 try {
+                    // console.log(credentials);
+                    
                     const user = await UserModel.findOne({
                         $or: [
                             { email: credentials.identifier },
                             { username: credentials.identifier }
                         ]
                     })
+                    console.log(user);
 
                     if (!user) {
                         throw new Error('No user found with this email')
                     }
 
-                    if (user.isVerfied) {
+                    if (!user.isVerfied) {
                         throw new Error('Please verify you accout before login')
                     }
+
                     const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
 
                     if (isPasswordCorrect) {

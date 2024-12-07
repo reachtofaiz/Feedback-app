@@ -52,41 +52,43 @@ const page = ({ message, onMessageDelete }: MessageCardProps) => {
                 variant: 'destructive'
             })
         }
-
-        return (
-            <Card>
-                <CardHeader>
-                    <CardTitle>Card Title</CardTitle>
-                    <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                            <Button variant="destructive"><X className="w-5 h-5" /></Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                    This action cannot be undone. This will permanently delete your
-                                    account and remove your data from our servers.
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                                <AlertDialogCancel onClick={handleDeleteConfirm}>Cancel</AlertDialogCancel>
-                                <AlertDialogAction>Continue</AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
-                    <CardDescription>Card Description</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    {/* <p>Card Content</p> */}
-                </CardContent>
-                <CardFooter>
-                    {/* <p>Card Footer</p> */}
-                </CardFooter>
-            </Card>
-
-        )
     }
+
+    return (
+
+        <Card>
+            <CardHeader>
+                <CardTitle>Card Title</CardTitle>
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button variant="destructive"><X className="w-5 h-5" /></Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete your
+                                account and remove your data from our servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel onClick={handleDeleteConfirm}>Cancel</AlertDialogCancel>
+                            <AlertDialogAction>Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+                <CardDescription>Card Description</CardDescription>
+            </CardHeader>
+            <CardContent>
+                {/* <p>Card Content</p> */}
+            </CardContent>
+            <CardFooter>
+                {/* <p>Card Footer</p> */}
+            </CardFooter>
+        </Card>
+
+    )
 }
+
 
 export default page
