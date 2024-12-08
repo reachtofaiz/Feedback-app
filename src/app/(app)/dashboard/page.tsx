@@ -31,7 +31,6 @@ const page = () => {
     const { data: session , status } = useSession()
     
 
-
     if(status == "unauthenticated"){
         // router.replace('/sign-in')
         redirect('/sign-in')
@@ -39,7 +38,7 @@ const page = () => {
 
     console.log(session);
     
-    const { username } = session?.user as User
+    
 
     
     const handleDeleteMessage = (messageId: string) => {
@@ -125,8 +124,10 @@ const page = () => {
         }
     }
 
-    
-
+    if (!session?.user) {
+        return <div>Loading...</div> 
+    }
+    const { username } = session?.user as User
     const baseUrl = `${window.location.protocol}//${window.location.host}`
     const profileUrl = `${baseUrl}/u/${username}`
 
@@ -145,63 +146,63 @@ const page = () => {
     }
 
     return (
-        <div>
-            <h1>User Dashboard</h1>
-            <div>
-                <h2>Copy your unique link</h2>{``}
-                <div>
-                    <input
-                        type="text"
-                        value={profileUrl}
-                        disabled
-                    />
-                    <Button onClick={copyToClipboard}>Copy</Button>
-                </div>
-            </div>
-
-            <div>
-                <Switch
-                    {...register('acceptMessage')}
-                    onCheckedChange={handleSwitchChange}
-                    disabled={isSwitchLoading}
-                />
-                <span>
-                    Accept message: {acceptMessages ? 'On' : 'Of'}
-                </span>
-            </div>
-            <Separator />
-
-            <Button
-                className=""
-                variant="outline"
-                onClick={(e) => {
-                    e.preventDefault();
-                    fetchMessages(true);
-                }}
-            >
-                {isLoading ? (
-                    <Loader2 />
-                ) : (
-                    <RefreshCcw />
-                )}
-            </Button>
-            <div>
-                {messages.length > 0 ? (
-                    messages.map((message, index) => (
-                        <MessageCard
-                        key = {message._id}
-                        message = {message}
-                        onMessageDelete = {handleDeleteMessage}
-                        />
-                    ))
-                ) : (
-                    <p>No message to display</p>
-                )}
-            </div>
-
-
+        <div className="my-8 mx-5 md:mx-8 lg:max-auto p-7 bg-while rounded w-full max-w-7xl">
+            <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
+            <div className="mb-5">
+                <h2 className="text-lg font-semibold mb-2:">Copy your unique link</h2>{``}
+                <div className="flex items-center">
+          <input
+            type="text"
+            value={profileUrl}
+            disabled
+            className="input input-bordered w-full p-2 mr-2 bg-slate-100"
+          />
+          <Button onClick={copyToClipboard}>Copy</Button>
         </div>
-    )
+      </div>
+
+      <div className="mb-4">
+        <Switch
+          {...register('acceptMessages')}
+          checked={acceptMessages}
+          onCheckedChange={handleSwitchChange}
+          disabled={isSwitchLoading}
+        />
+        <span className="ml-2">
+          Accept Messages: {acceptMessages ? 'On' : 'Off'}
+        </span>
+      </div>
+      <Separator />
+
+      <Button
+        className="mt-4"
+        variant="outline"
+        onClick={(e) => {
+          e.preventDefault();
+          fetchMessages(true);
+        }}
+      >
+        {isLoading ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <RefreshCcw className="h-4 w-4" />
+        )}
+      </Button>
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {messages.length > 0 ? (
+          messages.map((message, index) => (
+            <MessageCard
+              key={message._id}
+              message={message}
+              onMessageDelete={handleDeleteMessage}
+            />
+          ))
+        ) : (
+          <p>No messages to display.</p>
+        )}
+      </div>
+    </div>
+  );
 }
 
 
