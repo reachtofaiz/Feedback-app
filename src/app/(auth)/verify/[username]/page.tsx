@@ -35,7 +35,7 @@ const verifyAccount = () => {
                 title: 'success',
                 description: response.data.message
             })
-            router.replace('sign-in')
+            router.replace('/sign-in')
         } catch (error) {
 
             console.log("Error in sign-up of user", error);
@@ -75,7 +75,7 @@ const verifyAccount = () => {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" className="justify-center">Submit</Button>
                     </form>
                 </Form>
             </div>
