@@ -26,6 +26,7 @@ import { Message } from "@/model/user"
 import { useToast } from "@/hooks/use-toast"
 import axios, { AxiosError } from "axios"
 import { ApiResponse } from "@/type/ApiResponse"
+import dayjs from "dayjs"
 
 type MessageCardProps = {
     message: Message;
@@ -58,9 +59,9 @@ const page = ({ message, onMessageDelete }: MessageCardProps) => {
 
         <Card>
             <CardHeader>
-                <CardTitle>Card Title</CardTitle>
+                {/* <CardTitle>{ message.content }</CardTitle> */}
                 <AlertDialog>
-                    <AlertDialogTrigger asChild>
+                    <AlertDialogTrigger asChild className="w-7 p-5 relative left-[95%] top-0">
                         <Button variant="destructive"><X className="w-5 h-5" /></Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
@@ -77,18 +78,22 @@ const page = ({ message, onMessageDelete }: MessageCardProps) => {
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
-                <CardDescription>Card Description</CardDescription>
+                <CardDescription className="font-bold text-2xl text-black">{ message.content }</CardDescription>
             </CardHeader>
             <CardContent>
                 {/* <p>Card Content</p> */}
             </CardContent>
             <CardFooter>
-                {/* <p>Card Footer</p> */}
+            {dayjs(message.createdAt).format('MMM D, YYYY h:mm A')}
             </CardFooter>
         </Card>
 
     )
 }
-
+// width: 30px;
+// padding: 18px;
+// position: relative;
+// left: 94 %;
+// top: -25px;
 
 export default page
