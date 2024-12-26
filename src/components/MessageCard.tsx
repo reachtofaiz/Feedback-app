@@ -6,7 +6,6 @@ import {
     CardDescription,
     CardFooter,
     CardHeader,
-    CardTitle,
 } from "@/components/ui/card"
 
 import {
@@ -33,7 +32,7 @@ type MessageCardProps = {
     onMessageDelete: (messageId: string) => void
 }
 
-const page = ({ message, onMessageDelete }: MessageCardProps) => {
+const Page = ({ message, onMessageDelete }: MessageCardProps) => {
 
     const { toast } = useToast()
 
@@ -96,4 +95,4 @@ const page = ({ message, onMessageDelete }: MessageCardProps) => {
 // left: 94 %;
 // top: -25px;
 
-export default page
+export default Page

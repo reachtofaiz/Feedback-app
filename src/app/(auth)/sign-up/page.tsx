@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import Link from "next/link"
 import { useEffect, useState } from "react";
-import { useDebounceValue, useDebounceCallback } from 'usehooks-ts'
+import { useDebounceCallback } from 'usehooks-ts'
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { signUpSchema } from "@/schemas/signUpSchema";
@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
 
-const page = () => {
+const Page = () => {
 
     const [username, setUsername] = useState('')
     const [usernameMessage, setUsernameMessage] = useState('')
@@ -40,7 +40,7 @@ const page = () => {
         }
     })
 
-    const [isUsernameValid, setIsUsernameValid] = useState<boolean>(false)
+    // const [isUsernameValid, setIsUsernameValid] = useState<boolean>(false)
 
     useEffect(() => {
         const checkUsernameUnique = async () => {
@@ -49,13 +49,13 @@ const page = () => {
                 setUsernameMessage('')
                 try {
                     const response = await axios.get<ApiResponse>(`/api/unique-username?username=${username}`);
-                    let message = response.data.message
+                    const message = response.data.message
                     // console.log(message);
                     setUsernameMessage(message);
-                    setIsUsernameValid(true)
+                    // setIsUsernameValid(true)
                 } catch (error) {
                     const AxiosError = error as AxiosError<ApiResponse>;
-                    setIsUsernameValid(false)
+                    // setIsUsernameValid(false)
                     setUsernameMessage(
                         AxiosError.response?.data.message ?? "Error in checking username"
                     )
@@ -81,7 +81,7 @@ const page = () => {
         } catch (error) {
             console.log("Error in sign-up of user", error);
             const AxiosError = error as AxiosError<ApiResponse>;
-            let errorMessage = AxiosError.response?.data.message
+            const errorMessage = AxiosError.response?.data.message
             toast({
                 title: "Signup failed",
                 description: errorMessage,
@@ -194,4 +194,4 @@ const page = () => {
 }
 
 
-export default page
+export default Page

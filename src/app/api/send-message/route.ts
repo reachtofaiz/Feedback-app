@@ -1,8 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/user";
 import { Message } from "@/model/user";
-import { messageSchema } from "@/schemas/messageSchema";
-import { date } from "zod";
 
 
 export async function POST(request: Request) {

@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import axios, { AxiosError } from "axios"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Link, Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
@@ -18,7 +18,6 @@ import {
     FormMessage
 } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
-import { Toast } from "@/components/ui/toast"
 import * as z from 'zod'
 import { ApiResponse } from '@/type/ApiResponse'
 import { useParams } from "next/navigation"

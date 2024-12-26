@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Toast } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import { verifySchema } from "@/schemas/verifySchema";
 import { ApiResponse } from "@/type/ApiResponse";
@@ -14,7 +13,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 
-const verifyAccount = () => {
+const VerifyAccount = () => {
     const router = useRouter()
     const params = useParams<{ username: string }>()
     const { toast } = useToast()
@@ -40,7 +39,7 @@ const verifyAccount = () => {
 
             console.log("Error in sign-up of user", error);
             const AxiosError = error as AxiosError<ApiResponse>;
-            let errorMessage = AxiosError.response?.data.message
+            const errorMessage = AxiosError.response?.data.message
             toast({
                 title: "Signup failed",
                 description: errorMessage,
@@ -83,4 +82,4 @@ const verifyAccount = () => {
     )
 }
 
-export default verifyAccount
+export default VerifyAccount

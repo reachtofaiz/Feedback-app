@@ -11,20 +11,19 @@ import { ApiResponse } from "@/type/ApiResponse"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios, { AxiosError } from "axios"
 import { Loader2, RefreshCcw } from "lucide-react"
-import { Session, User } from "next-auth"
+import { User } from "next-auth"
 import { useSession } from "next-auth/react"
-import { redirect, useRouter } from "next/navigation"
+import { redirect } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
 
 
-const page = () => {
+const Page = () => {
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [isSwitchLoading, setIsSwitchLoading] = useState(false)
   const { toast } = useToast()
-  const router = useRouter()
 
   //optimistic UI --> gather information about this
 
@@ -193,7 +192,7 @@ const page = () => {
       
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         {messages.length > 0 ? (
-          messages.map((message, index) => (
+          messages.map((message) => (
             <MessageCard
               key={message._id}
               message={message}
@@ -210,4 +209,4 @@ const page = () => {
 
 
 
-export default page
+export default Page
