@@ -72,8 +72,8 @@ const Page = ({ message, onMessageDelete }: MessageCardProps) => {
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                            <AlertDialogCancel onClick={handleDeleteConfirm}>Cancel</AlertDialogCancel>
-                            <AlertDialogAction>Continue</AlertDialogAction>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={handleDeleteConfirm}>Continue</AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>

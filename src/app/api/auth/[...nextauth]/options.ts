@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs"
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/user";
+import { log } from "console";
 
 
 export const authOption: NextAuthOptions = {
@@ -42,8 +43,9 @@ export const authOption: NextAuthOptions = {
                     } else {
                         throw new Error('Incorrect password')
                     }
-                } catch (err: any) {
-                    throw new Error(err)
+                } catch (error) {
+                    console.log(error);
+                    
                 }
             }
         })

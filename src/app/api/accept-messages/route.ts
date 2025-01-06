@@ -38,7 +38,7 @@ export async function POST(request: Request) {
             success: true,
             message: "Message acceptance status updated successfully",
             updatedUser
-        }, { status: 401 })
+        }, { status: 200 })
 
     } catch (error) {
         console.log("Failed to update user status to accept message", error);
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
 
 
 export async function GET() {
-    await dbConnect
+    await dbConnect()
 
     const session = await getServerSession(authOption)
     const user: User = session?.user as User
